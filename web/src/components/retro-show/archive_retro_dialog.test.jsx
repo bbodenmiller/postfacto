@@ -47,33 +47,33 @@ describe('ArchiveRetroDialog', () => {
     expect(popupDialog.querySelector('#send_archive_email')).toBeFalsy();
   })
 
-  it('invokes archiveRetro and hideDialog when the confirmation button is clicked', () => {
+  it('invokes archiveRetro and onClose when the confirmation button is clicked', () => {
     const archiveRetro = jest.fn();
-    const hideDialog = jest.fn();
+    const onClose = jest.fn();
     const retro = createRetro();
     mountArchiveRetroDialog({
       retro: retro,
       archiveRetro: archiveRetro,
-      hideDialog: hideDialog,
+      onClose: onClose,
     });
 
     const popupDialog = getDialogElement()
     popupDialog.querySelector('.archive-dialog__actions--archive').click()
 
-    expect(hideDialog).toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalled();
     expect(archiveRetro).toHaveBeenCalledWith(retro);
 
   })
 
-  it('invokes hideDialog when the cancel button is clicked', () => {
-    const hideDialog = jest.fn();
+  it('invokes onClose when the cancel button is clicked', () => {
+    const onClose = jest.fn();
     mountArchiveRetroDialog({
-      hideDialog: hideDialog,
+      onClose: onClose,
     });
 
     const popupDialog = getDialogElement();
     popupDialog.querySelector('.archive-dialog__actions--cancel').click();
-    expect(hideDialog).toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalled();
   })
 
   it('invokes toggleSendArchiveEmail when the email preference is toggled', () => {
@@ -107,11 +107,8 @@ describe('ArchiveRetroDialog', () => {
 
   it('displays title and message given in dialog', () => {
     mountArchiveRetroDialog({
-      dialog: {
-        title: 'Some dialog title',
-        message: 'Some dialog message',
-        type: 'ARCHIVE_RETRO'
-      },
+      title: 'Some dialog title',
+      message: 'Some dialog message',
     });
 
     const popupDialog = getDialogElement();
@@ -153,16 +150,11 @@ function mountArchiveRetroDialog(props) {
   return mount((
     <MuiThemeProvider>
       <ArchiveRetroDialog
+        title="foo"
+        message="Testing"
         retro={createRetro()}
-        hideDialog={jest.fn()}
+        onClose={jest.fn()}
         featureFlags={{archiveEmails: true}}
-        dialog={
-          {
-            title: "foo",
-            message: "Testing",
-            type: "ARCHIVE_RETRO"
-          }
-        }
         toggleSendArchiveEmail={jest.fn()}
         archiveRetro={jest.fn()}
         {...props}

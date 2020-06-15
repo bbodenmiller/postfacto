@@ -53,6 +53,7 @@ export default class RetroHeading extends React.Component {
 
     this.onArchivesButtonClicked = this.onArchivesButtonClicked.bind(this);
     this.handleArchiveRetro = this.handleArchiveRetro.bind(this);
+    this.handleShareRetro = this.handleShareRetro.bind(this);
     this.handleViewArchives = this.handleViewArchives.bind(this);
     this.handleRetroSettings = this.handleRetroSettings.bind(this);
   }
@@ -85,6 +86,12 @@ export default class RetroHeading extends React.Component {
       title: 'You\'re about to archive this retro.',
       message: 'Are you sure?',
       type: 'ARCHIVE_RETRO',
+    });
+  }
+
+  handleShareRetro() {
+    this.props.showDialog({
+      type: 'SHARE_RETRO',
     });
   }
 
@@ -143,6 +150,13 @@ export default class RetroHeading extends React.Component {
             <h1>{retro.name}</h1>
           </div>
           <div className="retro-heading-buttons">
+            <RaisedButton
+              className="retro-heading-button share-button"
+              backgroundColor="#2574a9"
+              labelColor="#f8f8f8"
+              label="SHARE"
+              onClick={this.handleShareRetro}
+            />
             {
               retro.video_link ? (
                 <RaisedButton

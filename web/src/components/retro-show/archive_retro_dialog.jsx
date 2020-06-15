@@ -37,14 +37,11 @@ import Dialog from "material-ui/Dialog";
 
 export default class ArchiveRetroDialog extends React.Component {
   static propTypes = {
+    title: types.string.isRequired,
+    message: types.string.isRequired,
     retro: types.object.isRequired,
-    hideDialog: types.func.isRequired,
+    onClose: types.func.isRequired,
     featureFlags: types.object.isRequired,
-    dialog: types.shape({
-      title: types.string,
-      message: types.string,
-      type: types.string,
-    }).isRequired,
     toggleSendArchiveEmail: types.func.isRequired,
     archiveRetro: types.func.isRequired,
   };
@@ -62,12 +59,10 @@ export default class ArchiveRetroDialog extends React.Component {
 
   handleArchiveRetroConfirmation() {
     this.props.archiveRetro(this.props.retro);
-    this.props.hideDialog();
+    this.props.onClose();
   }
 
   render() {
-    const title = this.props.dialog ? this.props.dialog.title : '';
-    const message = this.props.dialog ? this.props.dialog.message : '';
     const toggle = DEFAULT_TOGGLE_STYLE;
 
     const archiveButton = (
@@ -84,7 +79,7 @@ export default class ArchiveRetroDialog extends React.Component {
       <button
         className="archive-dialog__actions--cancel"
         type="button"
-        onClick={this.props.hideDialog}
+        onClick={this.props.onClose}
       >
         Cancel
       </button>
@@ -92,14 +87,14 @@ export default class ArchiveRetroDialog extends React.Component {
 
     return (
       <Dialog
-        title={title}
+        title={this.props.title}
         actions={[cancelButton, archiveButton]}
-        open={!!this.props.dialog}
-        onRequestClose={this.props.hideDialog}
+        open={true}
+        onRequestClose={this.props.onClose}
         actionsContainerClassName="archive-dialog__actions"
         contentClassName="archive-dialog"
       >
-        <p>{message}</p>
+        <p>{this.props.message}</p>
         {
           this.props.featureFlags.archiveEmails ? (
             <div>

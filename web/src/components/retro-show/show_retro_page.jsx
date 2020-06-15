@@ -29,9 +29,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Dialog from 'material-ui/Dialog';
-import Toggle from 'material-ui/Toggle';
-
 import React from 'react';
 import types from 'prop-types';
 
@@ -46,7 +43,6 @@ import RetroHeading from './retro_heading';
 
 import EmptyPage from '../shared/empty_page';
 
-import {DEFAULT_TOGGLE_STYLE} from '../shared/constants';
 import {
   archiveRetro,
   createRetroActionItem,
@@ -77,6 +73,7 @@ import {
 import {retroArchives, retroLogin, retroSettings} from '../../redux/actions/router_actions';
 import {websocketUrl} from '../../helpers/websockets';
 import ArchiveRetroDialog from "./archive_retro_dialog";
+import ShareRetroDialog from "./share_retro_dialog";
 
 function getItemArchiveTime(item) {
   if (!item.archived_at) {
@@ -270,17 +267,25 @@ class ShowRetroPage extends React.Component {
   renderDialog() {
     const dialogType = this.props.dialog ? this.props.dialog.type : '';
 
-    if (dialogType === 'ARCHIVE_RETRO') {
-      return <ArchiveRetroDialog
-        retro={this.props.retro}
-        hideDialog={this.props.hideDialog}
-        featureFlags={this.props.featureFlags}
-        dialog={this.props.dialog}
-        toggleSendArchiveEmail={this.props.toggleSendArchiveEmail}
-        archiveRetro={this.props.archiveRetro}
+    switch (dialogType) {
+      case 'ARCHIVE_RETRO':
+        return <ArchiveRetroDialog
+          title={this.props.dialog.title}
+          message={this.props.dialog.message}
+          retro={this.props.retro}
+          featureFlags={this.props.featureFlags}
+          toggleSendArchiveEmail={this.props.toggleSendArchiveEmail}
+          archiveRetro={this.props.archiveRetro}
+          onClose={this.props.hideDialog}
         />;
+      case 'SHARE_RETRO':
+        return <ShareRetroDialog
+          retro={this.props.retro}
+          onClose={this.props.hideDialog}
+        />;
+      default:
+        return null
     }
-    return null;
   }
 
   renderMobile(retro) {

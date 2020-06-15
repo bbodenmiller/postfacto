@@ -30,6 +30,7 @@
 #
 require 'spec_helper'
 require 'pry-byebug'
+require 'clipboard'
 
 context 'Felicity', type: :feature, js: true, if: ENV['USE_MOCK_GOOGLE'] == 'true' do
   context 'when they have not registered before' do
@@ -212,6 +213,25 @@ context 'Felicity', type: :feature, js: true, if: ENV['USE_MOCK_GOOGLE'] == 'tru
             expect(page).to_not have_content('Archive & send email')
           end
         end
+      end
+    end
+
+    describe 'share a retro', focus: true do
+      before do
+        @retro_url = create_public_retro('Share Retro')
+        visit @retro_url
+      end
+
+      specify 'click on share shows the retro link' do
+        click_button 'SHARE'
+        expect(page).to have_field('share-retro-url', with: @retro_url)
+      end
+
+      specify 'click copy on the share retro dialog does copy the url into the clipboard' do
+        click_button 'SHARE'
+        find('.share-retro-url-copy').click
+        retro_url_from_clipboard = Clipboard.paste.encode('UTF-8')
+        expect(retro_url_from_clipboard).to eq(@retro_url)
       end
     end
   end
