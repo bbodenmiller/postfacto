@@ -34,7 +34,7 @@ BASE_DIR="$(dirname "$0")"
 
 echo "Installing API dependencies..."
 pushd "$BASE_DIR/api" >/dev/null
-  bundle install --without production
+  bundle install
 popd >/dev/null
 
 echo "Installing frontend dependencies..."
