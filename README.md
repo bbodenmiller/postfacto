@@ -1,5 +1,6 @@
 # Postfacto
 [![Build Status](https://travis-ci.org/pivotal/postfacto.svg?branch=master)](https://travis-ci.org/pivotal/postfacto)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/pivotal/postfacto)
 
 Postfacto helps teams run great [retrospectives](https://content.pivotal.io/blog/how-to-run-a-really-good-retrospective) remotely.
 
