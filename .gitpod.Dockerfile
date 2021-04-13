@@ -1,6 +1,6 @@
 # from https://gitlab.com/gitlab-org/project-templates/rails/-/blob/master/.gitpod.Dockerfile & https://github.com/gitpod-io/ruby-on-rails/blob/master/.gitpod.Dockerfile
 
-FROM gitpod/workspace-postgres
+FROM gitpod/workspace-full
 USER gitpod
 
 # Install the Ruby version specified in 'api/.ruby-version'
